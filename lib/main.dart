@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:device_apps/device_apps.dart';
 void main() {
   runApp(MyApp());
 }
@@ -73,17 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
             includeAppIcons: true,
             includeSystemApps: true,
             onlyAppsWithLaunchIntent: true,
-        )
-    return for (int i=0;i<apps.length;i++){
+        );
+    for (int i=0;i<apps.length;i++){
       Application app = apps[i];
-      ListView(
+      return ListView(
         children: [
           ListTile(
             title: Text(app.appName),
             leading: Icon(app.icon),
           ),
         ],
-      ),
+      );
     }
   }
 }
