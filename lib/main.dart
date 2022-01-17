@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -46,8 +47,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -57,37 +56,42 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: SafeArea(child:   _body(), right: true, left:  true, top: true, bottom: true,),
-      
+      body: SafeArea(
+        child: _body(),
+        right: true,
+        left: true,
+        top: true,
+        bottom: true,
+      ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: () { },
+        onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-  
+
   void getAppList() async {
-    List<Application> apps = await DeviceApps.getInstalledApplications
-      (
-        includeAppIcons: true,
-        includeSystemApps: true,
-        onlyAppsWithLaunchIntent: true,
+    List<Application> apps = await DeviceApps.getInstalledApplications(
+      includeAppIcons: true,
+      includeSystemApps: true,
+      onlyAppsWithLaunchIntent: true,
+    );
+    for (int i = 0; i < apps.length; i++) {
+      Application app = apps[i];
+      ListView(
+        children: [
+          ListTile(
+            title: Text(app.appName),
+          
+          ),
+        ],
       );
-      for (int i=0;i<apps.length;i++){
-        Application app = apps[i];
-          return ListView(
-            children: [
-              ListTile(
-                title: Text(app.appName),
-                leading: Icon(app.icon),
-              ),
-            ],
-          );
-        }
+    }
   }
-  
+
   Widget _body() {
-    return getAppList()
+    return getAppList();
   }
 }
