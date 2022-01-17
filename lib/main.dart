@@ -60,30 +60,34 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(child:   _body(), right: true, left:  true, top: true, bottom: true,),
       
       floatingActionButton: FloatingActionButton(
-        
+        onPressed: () { },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
   
-  Widget _body() {
+  void getAppList() async {
     List<Application> apps = await DeviceApps.getInstalledApplications
-        (
-            includeAppIcons: true,
-            includeSystemApps: true,
-            onlyAppsWithLaunchIntent: true,
-        );
-    for (int i=0;i<apps.length;i++){
-      Application app = apps[i];
-      return ListView(
-        children: [
-          ListTile(
-            title: Text(app.appName),
-            leading: Icon(app.icon),
-          ),
-        ],
+      (
+        includeAppIcons: true,
+        includeSystemApps: true,
+        onlyAppsWithLaunchIntent: true,
       );
-    }
+      for (int i=0;i<apps.length;i++){
+        Application app = apps[i];
+          return ListView(
+            children: [
+              ListTile(
+                title: Text(app.appName),
+                leading: Icon(app.icon),
+              ),
+            ],
+          );
+        }
+  }
+  
+  Widget _body() {
+    return getAppList()
   }
 }
