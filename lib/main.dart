@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:device_apps/device_apps.dart';
+import 'app_event.dart';
+import 'app_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,7 +58,32 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       body: SafeArea(
-        child: _body(),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<Object>(
+                          builder: (BuildContext context) => AppsListScreen()),
+                    );
+                  },
+                  child: Text('Applications list')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<Object>(
+                          builder: (BuildContext context) =>
+                              AppsEventsScreen()),
+                    );
+                  },
+                  child: Text('Applications events'))
+            ],
+          ),
+        ),
         right: true,
         left: true,
         top: true,
@@ -70,28 +96,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-
-  void getAppList() async {
-    List<Application> apps = await DeviceApps.getInstalledApplications(
-      includeAppIcons: true,
-      includeSystemApps: true,
-      onlyAppsWithLaunchIntent: true,
-    );
-    for (int i = 0; i < apps.length; i++) {
-      Application app = apps[i];
-      ListView(
-        children: [
-          ListTile(
-            title: Text(app.appName),
-          
-          ),
-        ],
-      );
-    }
-  }
-
-  Widget _body() {
-    return getAppList();
   }
 }
